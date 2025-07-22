@@ -15,12 +15,12 @@ export class CreateSyncMapping1750356342704 implements MigrationInterface {
                         generationStrategy: "increment",
                     },
                     {
-                        name: "sistema1_id",
+                        name: "externo_id",
                         type: "varchar",
                         length: "255",
                     },
                     {
-                        name: "sistema2_id",
+                        name: "interno_id",
                         type: "bigint",
                     },
                     {
@@ -47,8 +47,8 @@ export class CreateSyncMapping1750356342704 implements MigrationInterface {
         await queryRunner.createIndex(
             "sync_mapping",
             new TableIndex({
-                name: "UQ_sync_mapping_sistema1_tipo",
-                columnNames: ["sistema1_id", "tipo_entidade"],
+                name: "UQ_sync_mapping_externo_tipo",
+                columnNames: ["externo_id", "tipo_entidade"],
                 isUnique: true,
             })
         );
@@ -56,15 +56,15 @@ export class CreateSyncMapping1750356342704 implements MigrationInterface {
         await queryRunner.createIndex(
             "sync_mapping",
             new TableIndex({
-                name: "IDX_sync_mapping_sistema2_id",
-                columnNames: ["sistema2_id"],
+                name: "IDX_sync_mapping_interno_id",
+                columnNames: ["interno_id"],
             })
         );
     }
 
     public async down(queryRunner: QueryRunner): Promise<void> {
-        await queryRunner.dropIndex("sync_mapping", "IDX_sync_mapping_sistema2_id");
-        await queryRunner.dropIndex("sync_mapping", "UQ_sync_mapping_sistema1_tipo");
+        await queryRunner.dropIndex("sync_mapping", "IDX_sync_mapping_interno_id");
+        await queryRunner.dropIndex("sync_mapping", "UQ_sync_mapping_externo_tipo");
         await queryRunner.dropTable("sync_mapping");
     }
 
